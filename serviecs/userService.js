@@ -50,17 +50,19 @@ function register(req,res,next){
 }
 function login(req,res,next){
     const err = validationResult(req)
+    console.log(req);
     if(!err.isEmpty()){
         next({msg:'456'})
     }else{
         let {username,password} = req.body;
-        password = md5(username)
+        //password = md5(username)
         const query = `select * from user where username='${username}' and password='${password}'`;
         querySql(query).then(user =>{
+            console.log(username,password)
             if(!user || user.length === 0){
                 res.json({
                     code:'200',
-                    msg:'用户名或密码错误',
+                    msg:'用户名或密码错误11111',
                     data:null
                 })
             }else{
@@ -75,6 +77,8 @@ function login(req,res,next){
                     }
                 })
             }
+        },function(err){
+            console.log(err)
         })
     }
 }
